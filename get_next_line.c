@@ -6,7 +6,7 @@
 /*   By: ketenor <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/21 12:13:32 by ketenor           #+#    #+#             */
-/*   Updated: 2020/02/05 23:37:58 by ketenor          ###   ########.fr       */
+/*   Updated: 2020/02/13 12:05:53 by ketenor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,16 +37,16 @@ int	get_next_line(int fd, char **line)
 		*text = '\0';
 		return (-1);
 	}
-	while (!ft_strchr(text, '\n') && (nb_read = read(fd, buff, BUFFER_SIZE)))
+	while (!ft_strchr(text, '\n') && (nb_read = read(fd, buff, BUFFER_SIZE)) > 0)
 	{
-		if (none_read(nb_read, buff))
-			return (-1);
 		buff[nb_read] = '\0';
 		text = ft_strcat(text, buff);
 	}
+    *line = ft_strncpy(text, '\n');
+    res = ft_strchr(text, '\n');
+    text = ft_shift(text, '\n');
+	if (none_read(nb_read, buff))
+        return (-1);
 	free(buff);
-	*line = ft_strncpy(text, '\n');
-	res = ft_strchr(text, '\n');
-	text = ft_shift(text, '\n');
 	return (res);
 }
