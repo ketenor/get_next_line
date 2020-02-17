@@ -6,7 +6,7 @@
 /*   By: ketenor <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/21 12:14:03 by ketenor           #+#    #+#             */
-/*   Updated: 2020/02/06 00:11:22 by ketenor          ###   ########.fr       */
+/*   Updated: 2020/02/17 16:40:29 by ketenor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ char	*ft_strncpy(char *s, char c)
 		return (NULL);
 	i = -1;
 	cpt = 0;
-	while (++i < ft_strlen(s) && s[i] != c)
+	while (s[++i] && s[i] != c)
 		cpt++;
 	if (!(res = malloc(cpt + 1)))
 		return (NULL);
@@ -63,7 +63,8 @@ char	*ft_strcat(char *s1, char *s2)
 	char	*res;
 	int		i;
 	int		j;
-	int		fullsize;
+	int		size1;
+	int		size2;
 
 	if (!s1)
 		return (s2);
@@ -71,12 +72,13 @@ char	*ft_strcat(char *s1, char *s2)
 		return (s1);
 	i = -1;
 	j = -1;
-	fullsize = ft_strlen(s1) + ft_strlen(s2) + 1;
-	if (!(res = malloc(fullsize)))
+	size1 = ft_strlen(s1);
+	size2 = ft_strlen(s2);
+	if (!(res = malloc(size1 + size2 + 1)))
 		return (NULL);
-	while (++i < ft_strlen(s1))
+	while (++i < size1)
 		res[i] = s1[i];
-	while (i - ft_strlen(s1) < ft_strlen(s2))
+	while (i - size1 < size2)
 		res[i++] = s2[++j];
 	res[i] = '\0';
 	free(s1);
@@ -89,10 +91,10 @@ char	*ft_shift(char *s, char c)
 	int		j;
 	char	*res;
 
+	i = 0;
+	j = 0;
 	if (!s)
 		return (NULL);
-	j = 0;
-	i = 0;
 	while (s[i] && s[i] != c)
 		i++;
 	if (!(res = malloc(ft_strlen(s) - i)))
